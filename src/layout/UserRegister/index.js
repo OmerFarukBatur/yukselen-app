@@ -3,8 +3,14 @@ import img1 from '../../app-file/images/pages/anket_dosha.jpg';
 import {  useFormik } from 'formik';
 import validations from './valodation';
 import { gettUser, postUser } from '../../api';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import BaseForm from '../SubdoshaForms';
+
 
 function Index() {
+
+    let navigate = useNavigate();
+    const useLocationn = useLocation();
 
     const formik = useFormik({
         initialValues: {
@@ -38,15 +44,17 @@ function Index() {
 
         onSubmit: async (values, bag) => {
 
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json','accept': '*/*' },
-                body: JSON.stringify(values.fullName )
-            };
-            fetch('https://localhost:7124/api/User/Register', requestOptions)
-                .then(response => console.log(response.json()) )
-                .then(data => console.log(data));
-
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json','accept': '*/*' },
+            //     body: JSON.stringify(values.fullName )
+            // };
+            // fetch('https://localhost:7124/api/User/Register', requestOptions)
+            //     .then(response => console.log(response.json()) )
+            //     .then(data => console.log(data));
+            console.log(values);
+            console.log(useLocationn);
+            navigate("/subdosha",{replace:true});
           /* try {
             const registerResponse = await postUser(values.fullName);
             //const registerResponse = await gettUser();
@@ -269,7 +277,7 @@ function Index() {
                 </div>
                 <div className="row-fluid">
                     <div className="span6" style={{ paddingTop: 20, textAlign: 'center' }} >
-                        <button id="btnStart" type="submit" className="btn btn-info btn-large" >Ankete Başla</button>
+                        <button id="btnStart" type="submit" className="btn btn-info btn-large"  >Ankete Başla</button>
                     </div>
                     <div className="span6">&nbsp;</div>
                 </div>

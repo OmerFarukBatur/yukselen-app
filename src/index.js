@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {  BrowserRouter ,Routes, Route } from 'react-router-dom';
 
 
 import '../src/app-file/favicon.ico';
@@ -44,11 +45,18 @@ import '../src/app-file/images/favicons/favicon-16x16.png';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import BaseForm from './layout/SubdoshaForms';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={ <App /> }>
+        <Route path="/subdosha" element={ <BaseForm />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
