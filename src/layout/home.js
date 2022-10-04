@@ -23,7 +23,7 @@ function Home() {
                             <div className="page-header">
                                 <h1>DOSHA (ZİHİN VE BEDEN YAPISI) TESTİ <small>Bünyenizi Keşfedin.</small></h1>
                             </div>
-                            <section id="contact">
+                            {/* <section id="contact">
                                 <div className="contact">
                                     <div className="row-fluid">
                                         <div className="span6">
@@ -31,7 +31,7 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                            </section>
+                            </section> */}
                         </div>
                     </div>
                 </div>

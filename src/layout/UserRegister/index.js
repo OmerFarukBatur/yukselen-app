@@ -1,11 +1,11 @@
 import React from 'react';
 import img1 from '../../app-file/images/pages/anket_dosha.jpg';
-import {  useFormik } from 'formik';
+import { useFormik } from 'formik';
 import validations from './valodation';
-import { gettUser, postUser } from '../../api';
+import https from '../../api';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import BaseForm from '../SubdoshaForms';
-
+import axios from 'axios';
 
 function Index() {
 
@@ -19,51 +19,22 @@ function Index() {
             phoneNumber: '',
             job: '',
             address: '',
-            userLength: 150,
-            kilo: 40,
-            gender: 'KADIN',
-            day: 1,
-            month: 1,
-            year: 1920
+            userLength: 0,
+            kilo: 0,
+            gender: '',
+            day: 0 ,
+            month: 0 ,
+            year: 0 
         },
         validationSchema: validations,
-
-      /*   {
-            fullName: values.fullName,
-            email: values.email,
-            phoneNumber: values.phoneNumber,
-            job: values.job,
-            address: values.address,
-            userLength: values.userLength,
-            kilo: values.kilo,
-            gender: values.gender,
-            day: values.day,
-            month: values.month,
-            year: values.year
-        } */
-
-        onSubmit: async (values, bag) => {
-
-            // const requestOptions = {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json','accept': '*/*' },
-            //     body: JSON.stringify(values.fullName )
-            // };
-            // fetch('https://localhost:7124/api/User/Register', requestOptions)
-            //     .then(response => console.log(response.json()) )
-            //     .then(data => console.log(data));
-            console.log(values);
-            console.log(useLocationn);
-            navigate("/subdosha",{replace:true});
-          /* try {
-            const registerResponse = await postUser(values.fullName);
-            //const registerResponse = await gettUser();
-            console.log(registerResponse);
-            //history.push('/profile');
-          } catch (error) {
-            bag.setErrors({general: error.response.data.message});
-          } */
-        },
+        onSubmit: async(values, bag) => {
+            await https.post(`${process.env.REACT_APP_API_URL}/api/User/Register`, values,{
+                headers: {
+                  Accept: "*/*",
+                  "Content-Type": "application/json;charset=UTF-8",
+                }
+              }).then(()=> console.log("success")).catch(()=> console.log(bag)); 
+        },       
     });
 
 
@@ -83,7 +54,7 @@ function Index() {
     }
 
     return (
-        <>        
+        <>
             <form onSubmit={formik.handleSubmit}>
                 <div className="row-fluid">
                     <div className="span6">
@@ -98,7 +69,7 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.fullName}
-                                    style={{backgroundColor:formik.touched.fullName && formik.errors.fullName ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.fullName && formik.errors.fullName ? 'lightcoral' : 'white' }}
                                     maxLength="50" className="input-block-level"
                                     type="text"
                                     placeholder="Ad ve Soyad"
@@ -120,7 +91,7 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.email}
-                                    style={{backgroundColor:formik.touched.email && formik.errors.email ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.email && formik.errors.email ? 'lightcoral' : 'white' }}
                                     maxLength="50"
                                     className="input-block-level"
                                     type="text"
@@ -138,7 +109,7 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.phoneNumber}
-                                    style={{backgroundColor:formik.touched.phoneNumber && formik.errors.phoneNumber ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.phoneNumber && formik.errors.phoneNumber ? 'lightcoral' : 'white' }}
                                     maxLength="20"
                                     className="input-block-level"
                                     type="text"
@@ -156,7 +127,7 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.job}
-                                    style={{backgroundColor:formik.touched.job && formik.errors.job ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.job && formik.errors.job ? 'lightcoral' : 'white' }}
                                     maxLength="20"
                                     className="input-block-level"
                                     type="text"
@@ -174,7 +145,7 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.address}
-                                    style={{backgroundColor:formik.touched.address && formik.errors.address ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.address && formik.errors.address ? 'lightcoral' : 'white' }}
                                     maxLength="250"
                                     className="input-block-level"
                                     rows="3"
@@ -192,10 +163,10 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.userLength}
-                                    style={{backgroundColor:formik.touched.userLength && formik.errors.userLength ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.userLength && formik.errors.userLength ? 'lightcoral' : 'white' }}
                                     maxLength="20"
                                     className="input-block-level"
-                                    type="text"
+                                    type="number"
                                     placeholder="Boy 000 cm"
                                 />
                             </div>
@@ -210,10 +181,10 @@ function Index() {
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     defaultValue={formik.values.kilo}
-                                    style={{backgroundColor:formik.touched.kilo && formik.errors.kilo ? 'lightcoral' : 'white'}}
+                                    style={{ backgroundColor: formik.touched.kilo && formik.errors.kilo ? 'lightcoral' : 'white' }}
                                     maxLength="20"
                                     className="input-block-level"
-                                    type="text"
+                                    type="number"
                                     placeholder="Kilo 000 Kg"
                                 />
                             </div>
@@ -224,11 +195,12 @@ function Index() {
                                 Cinsiyet (*)
                             </div>
                             <div className="span3">
-                                <select id="ddlGender" defaultValue={formik.values.gender} style={{ width: 280 }} name="gender" >
-                                    <option value="KADIN">KADIN</option>
-                                    <option value="ERKEK">ERKEK</option>
+                                <select id="ddlGender" defaultValue={formik.values.gender} onChange={formik.handleChange} style={{ width: 280 }} name="gender" >
+                                    <option >Seçiniz..</option>
+                                    <option onChange={formik.handleChange} value="KADIN">KADIN</option>
+                                    <option onChange={formik.handleChange} value="ERKEK">ERKEK</option>
                                 </select>
-                            
+
                             </div>
                         </div>
                         <div className="row-fluid">
@@ -236,31 +208,31 @@ function Index() {
                                 Doğum Tarihi (*)
                             </div>
                             <div className="span2">
-                                <select id="ddlDay" defaultValue={formik.values.day} style={{ width: 80 }} name="day" >
+                                <select id="ddlDay" onChange={formik.handleChange} defaultValue={formik.values.day} style={{ width: 80 }} name="day" >
                                     <option >Gün</option>
                                     {
                                         allDay.map((value, index) => {
-                                            return <option value={value} key={index}>{value}</option>
+                                            return <option onChange={formik.handleChange} value={value} key={index}>{value}</option>
                                         })
                                     }
                                 </select>
                             </div>
                             <div className="span2">
-                                <select id="ddlMonths" defaultValue={formik.values.month} style={{ width: 80 }} name="month" >
+                                <select id="ddlMonths" onChange={formik.handleChange} defaultValue={formik.values.month} style={{ width: 80 }} name="month" >
                                     <option >Ay</option>
                                     {
                                         allMonth.map((value, index) => {
-                                            return <option value={value} key={index}>{value}</option>
+                                            return <option onChange={formik.handleChange} value={value} key={index}>{value}</option>
                                         })
                                     }
                                 </select>
                             </div>
                             <div className="span2">
-                                <select id="ddlYears" defaultValue={formik.values.year} style={{ width: 80 }} name="year" >
+                                <select id="ddlYears" onChange={formik.handleChange} defaultValue={formik.values.year} style={{ width: 80 }} name="year" >
                                     <option >Yıl</option>
                                     {
                                         years.map((value, index) => {
-                                            return <option value={value} key={index}>{value}</option>
+                                            return <option onChange={formik.handleChange} value={value} key={index}>{value}</option>
                                         })
                                     }
                                 </select>
@@ -277,7 +249,7 @@ function Index() {
                 </div>
                 <div className="row-fluid">
                     <div className="span6" style={{ paddingTop: 20, textAlign: 'center' }} >
-                        <button id="btnStart" type="submit" className="btn btn-info btn-large"  >Ankete Başla</button>
+                        <button id="btnStart" type="submit" className="btn btn-info btn-large" >Ankete Başla</button>
                     </div>
                     <div className="span6">&nbsp;</div>
                 </div>
@@ -285,8 +257,8 @@ function Index() {
                     <hr className="bs-docs-separator" />
                 </div>
             </form>
-        
-      </>
+
+        </>
     )
 }
 
