@@ -1,6 +1,20 @@
-import React from 'react'
+import axios from 'axios';
+import React from 'react';
 
 function Index() {
+
+    const questionList = axios.get(`${process.env.REACT_APP_API_URL}/api/User/GetQuestion`, "form1Vata",
+        {
+            headers:{
+                //'Access-Control-Allow-Origin': 'https://localhost:7124;*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'accept': '*/*',
+                
+            },
+        }   
+    );
+    console.log(questionList);
+
     return (
         <>
 

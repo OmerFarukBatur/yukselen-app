@@ -52,8 +52,8 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <App /> }>
-        <Route path="/subdosha" element={ <BaseForm />}/>
+        <Route path="/" element={ <BaseForm /> }>
+        <Route path="/subdosha" element={ <App />}/>
         </Route>
       </Routes>
     </BrowserRouter>

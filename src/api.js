@@ -18,10 +18,19 @@ import axios from "axios";
 //     return data;
 // };
 
-// export const gettUser = async() =>{
-//     const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/api/User/Create`);
-//     return data;
-// };
+export const getQuestion = async(input) =>{
+    const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/api/User/GetQuestion`, input,
+        {
+            headers:{
+               //'Access-Control-Allow-Origin': 'https://localhost:7124;*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'accept': '*/*',
+                
+            },
+        }
+    );
+    return data;
+};
 
 
 export default{
